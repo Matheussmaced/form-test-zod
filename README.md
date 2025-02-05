@@ -15,6 +15,9 @@ Este é um projeto de teste que consiste em uma tela de formulário para cadastr
 - Validação dos campos utilizando **Zod**.
 - Exibição de mensagens de erro para dados inválidos.
 
+![Tela de login](./src/public/print1.JPG)
+![Tela de sucesso](./src/public/print.JPG)
+
 ## Como Executar o Projeto
 
 1. Clone o repositório:
