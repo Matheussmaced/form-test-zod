@@ -11,7 +11,7 @@ export default function InputFormText({ placeholder, label, type, register }: In
         {...register}
         type={type}
         placeholder={placeholder}
-        className="text-inherit p-2 text-xs w-96 mb-4 border border-slate-300 rounded-md"
+        className="text-inherit p-2 text-xs w-80 mb-4 border border-slate-300 rounded-md"
       />
     </div>
   )

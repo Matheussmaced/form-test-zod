@@ -19,12 +19,13 @@ export default function Form() {
     defaultValues: {
       email: "",
       password: "",
+      birthData: new Date,
     },
   });
 
   const onSubmit = (data: FormSchemaType) => {
     const user = mockUsers.find(
-      (user) => user.email === data.email && user.password === data.password
+      (user) => user.email === data.email && user.password === data.password && new Date(user.birthData).getTime() === data.birthData.getTime()
     );
 
     if (user) {
@@ -35,13 +36,13 @@ export default function Form() {
 
       window.location.href = "/dashboard";
     } else {
-      setErrorMessage("Email ou senha incorretos. Tente novamente");
+      setErrorMessage("Email ou senha ou data de nascimento incorretos. Tente novamente");
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-3">
         <div>
           <InputFormText
             type="email"
@@ -69,7 +70,19 @@ export default function Form() {
           )}
         </div>
 
-        {errorMessage && <p className="text-xs text-red-500">{errorMessage}</p>}
+        <div className="flex flex-col">
+          <InputFormText
+            type="date"
+            label="Data de nascimento"
+            placeholder=""
+            register={register("birthData")}
+          />
+          {errors.birthData && (
+            <p className="text-xs text-red-500">{errors.birthData.message}</p>
+          )}
+        </div>
+
+        {errorMessage && <p className="text-xs text-red-500 -mt-6">{errorMessage}</p>}
 
         <div className="justify-between flex">
           <button
