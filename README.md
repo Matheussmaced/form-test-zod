@@ -1,6 +1,6 @@
 # Formulário de Cadastro
 
-Este é um projeto de teste que consiste em uma tela de formulário para cadastro de usuários. O objetivo é criar uma interface simples e eficiente, validando os dados de entrada utilizando a biblioteca **Zod**.
+Este é um projeto de teste que consiste em uma tela de formulário para login de usuários. O objetivo é criar uma interface simples e eficiente, validando os dados de entrada utilizando a biblioteca **Zod**.
 
 ## Tecnologias Utilizadas
 
@@ -11,7 +11,7 @@ Este é um projeto de teste que consiste em uma tela de formulário para cadastr
 
 ## Funcionalidades
 
-- Formulário para cadastro de usuários.
+- Formulário para login de usuários.
 - Validação dos campos utilizando **Zod**.
 - Exibição de mensagens de erro para dados inválidos.
 
