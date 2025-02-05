@@ -6,7 +6,7 @@ Este é um projeto de teste que consiste em uma tela de formulário para cadastr
 
 - **Next.js**
 - **TypeScript**
-- **Styled-Components**
+- **Tailwind**
 - **Zod**
 
 ## Funcionalidades
