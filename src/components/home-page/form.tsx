@@ -5,7 +5,6 @@ import InputFormText from "./inputsFormText";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { mockUsers } from "@/data/mockUsers";
 import { Github } from "lucide-react";
 import { signIn } from "next-auth/react";
 
@@ -25,20 +24,26 @@ export default function Form() {
     },
   });
 
-  const onSubmit = (data: FormSchemaType) => {
-    const user = mockUsers.find(
-      (user) => user.email === data.email && user.password === data.password && new Date(user.birthData).getTime() === data.birthData.getTime()
-    );
+  const onSubmit = async (data: FormSchemaType) => {
+    try {
+      const formattedDate = new Date(data.birthData).toLocaleDateString('sv-SE')
 
-    if (user) {
-      console.log("Login bem-sucedido!", user);
-      setErrorMessage("");
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+        birthData: formattedDate
+      });
 
-      localStorage.setItem("user", JSON.stringify(user));
+      if(res?.error){
+        setErrorMessage(res.error);
+      }else {
+        window.location.href = "/dashboard";
+      }
 
-      window.location.href = "/dashboard";
-    } else {
-      setErrorMessage("Email ou senha ou data de nascimento incorretos. Tente novamente");
+    } catch (error) {
+      setErrorMessage("Ocorreu um erro ao tentar logar.")
+      console.log(error)
     }
   };
 
@@ -85,7 +90,7 @@ export default function Form() {
         </div>
 
         <div>
-          <button className="py-2 px-4 w-30 border rounded-md border-slate-300 text-xs mb-3 flex items-center gap-3" onClick={() => signIn('github', { callbackUrl: "/dashboard" })}>
+          <button type="button" className="py-2 px-4 w-30 border rounded-md border-slate-300 text-xs mb-3 flex items-center gap-3" onClick={async () => await signIn('github', { callbackUrl: "/dashboard" })}>
             Entrar com GitHub
             <Github size={25} color="white" className="p-1 bg-bgColor rounded-full" />
           </button>

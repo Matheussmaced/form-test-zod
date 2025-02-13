@@ -1,37 +1,19 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
+import { signOut, useSession } from "next-auth/react"
 
-export default function Dashboard() {
-  const [user, setUser] = useState<{ name: string } | null>(null);
+export default function Dashboard () {
+  const { data: session, status } = useSession();
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else {
-      window.location.href = "/";
-    }
-  }, []);
-
+  if(status === "loading") return <p>Carregando...</p>
+  if(!session) return window.location.href = "/login"
+  
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      {user ? (
-        <>
-          <h1 className="text-2xl font-bold">Bem-vindo, {user.name}!</h1>
-          <button
-            className="mt-5 py-2 px-4 bg-red-500 text-white rounded-md"
-            onClick={() => {
-              localStorage.removeItem("user");
-              window.location.href = "/";
-            }}
-          >
-            Sair
-          </button>
-        </>
-      ) : (
-        <p>Redirecionando...</p>
-      )}
+    <div>
+      <h1>Bem-vindo, {session.user?.name || session.user?.email}!</h1>
+      <button onClick={() => signOut()}>
+        Sair
+      </button>
     </div>
-  );
+  )
 }
