@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { mockUsers } from "@/data/mockUsers";
+import { Github } from "lucide-react";
+import { signIn } from "next-auth/react";
 
 export default function Form() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -80,6 +82,13 @@ export default function Form() {
           {errors.birthData && (
             <p className="text-xs text-red-500">{errors.birthData.message}</p>
           )}
+        </div>
+
+        <div>
+          <button className="py-2 px-4 w-30 border rounded-md border-slate-300 text-xs mb-3 flex items-center gap-3" onClick={() => signIn('github', { callbackUrl: "/dashboard" })}>
+            Entrar com GitHub
+            <Github size={25} color="white" className="p-1 bg-bgColor rounded-full" />
+          </button>
         </div>
 
         {errorMessage && <p className="text-xs text-red-500 -mt-6">{errorMessage}</p>}
